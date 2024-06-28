@@ -1,0 +1,88 @@
+import csv
+import os
+import time
+agregarC=True
+agregarCompra=True
+listaP=[]
+datos={}
+valor=0
+valorVenta=0
+valorCOMPRA=0
+
+def menu_productos():
+    print("""  
+      PRODUCTOS y  Valores 
+Producto:            Valor:
+1. abono             1.200
+2. tierra            1.000
+3. lirio             1.100
+4. Rosas Rojas       1.700
+5. Margarita         1.100
+0. Salir
+""")
+while agregarC:
+    datos={
+    "nombre":input("Ingresa tu nombre: "),
+    "Numero":int(input("ingresa tu numedo celular: ")),
+    "Correo":input("Ingresa tu Correo electronico: "),
+    "Dirrección":input("ingresa tu direccion: ")
+    } 
+    agregarCompra=True
+    listaP.clear()
+    valorVenta=0
+    while agregarCompra:
+        menu_productos()
+        producto=input("Ingrese numero de producto: ")
+        if int(producto)==0:
+            agregarC=False
+            break
+        while not producto.isdigit() or int(producto)<0 or int(producto)>5:
+            if producto.isdigit():
+                if int(producto)<0 or int(producto)>5:
+                    print
+            elif producto.lower()=="m":
+                    menu_productos()
+            else:
+                print
+            producto=input("Ingrese numero de producto:\nletra'm' para visualizar el menu\n")
+        unidadesP=input("Unidades: ")
+        while not unidadesP.isdigit() or int(producto)<0:
+            if unidadesP.isdigit():
+                if int(producto)<0:
+                    print("cantidad invalida")
+            else:
+                break
+            unidadesP=input("Unidades: ")
+        if int(producto)==1:
+            valor=1000
+        elif int(producto)==2:
+            valor=2000
+        elif int(producto)==3:
+            valor=3000
+        elif int(producto)==4:
+            valor=4000
+        elif int(producto)==5:
+            valor=5000
+        valorVenta+=valor*int(unidadesP)
+        valorCOMPRA=valor*int(unidadesP)
+        listaP.append([f"Producto {producto}",f"Cantidad: {unidadesP}",f"Valor: {valorCOMPRA}$"])
+        compra=input("Agregar compra:\n1. Si \n2. No")
+        while not compra.isdigit() or int(compra)!=1 and int(compra)!=2 :
+            if not compra.isdigit():
+                print()
+            elif int(compra)!=1 or int(compra)!=2:
+                break
+            compra=input("Agregar compra:\n1.si\n2.no")
+        if int(compra)==2:
+            agregarCompra=False
+    for i in listaP:
+        print(i)
+    for n in datos:
+        print(n)
+    with open ('30%.csv','w', newline='') as f:
+        writer = csv.writer(f, delimiter=',')
+        writer.writerow(datos)
+        writer.writerow(producto)
+        writer.writerow(unidadesP)
+        writer.writerow(listaP)
+        break
